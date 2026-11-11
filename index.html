@@ -1,61 +1,490 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmad Faried Musyafa' | Personal Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faried — Portofolio</title>
+<meta name="description" content="Portofolio Ahmad Faried Musyafa' — Mahasiswa Manajemen Informasi, STMM MMTC Yogyakarta">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0b1b3f;
+    --navy-2:#0f2557;
+    --navy-deep:#060f26;
+    --sky:#7cc4ff;
+    --sky-2:#b9e0ff;
+    --sky-soft:#eef7ff;
+    --white:#fff;
+    --bg:#f6f9fe;
+    --ink:#0b1b3f;
+    --muted:#6277a0;
+    --line:rgba(11,27,63,.08);
+    --r:28px;
+    --serif:'Instrument Serif',serif;
+    --sans:'Plus Jakarta Sans',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img{display:block}
+  .wrap{width:min(1180px,92%);margin:0 auto}
+  .serif{font-family:var(--serif);font-style:italic;font-weight:400}
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  /* cursor glow */
+  .glow{
+    position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,rgba(124,196,255,.22),transparent 65%);
+    transform:translate(-50%,-50%);left:50%;top:30%;transition:opacity .4s;
+  }
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
+  /* ---------- NAV (floating pill) ---------- */
+  .nav{
+    position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:100;
+    display:flex;align-items:center;gap:6px;padding:8px;border-radius:999px;
+    background:rgba(255,255,255,.72);backdrop-filter:blur(18px) saturate(1.6);
+    border:1px solid rgba(255,255,255,.8);box-shadow:0 10px 40px -10px rgba(11,27,63,.25);
+  }
+  .nav .brand{
+    width:42px;height:42px;border-radius:50%;background:var(--navy);color:var(--sky);
+    display:grid;place-items:center;font-weight:800;font-size:.9rem;margin-right:6px;
+  }
+  .nav a.l{
+    padding:10px 18px;border-radius:999px;font-size:.85rem;font-weight:500;color:var(--muted);transition:.3s;
+  }
+  .nav a.l:hover,.nav a.l.on{background:var(--navy);color:var(--white)}
+  .nav .cta{
+    margin-left:6px;padding:11px 20px;border-radius:999px;background:var(--sky);color:var(--navy);
+    font-size:.85rem;font-weight:700;transition:.3s;
+  }
+  .nav .cta:hover{background:var(--navy);color:var(--white)}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f5f7fb;
-            color: #1e293b;
-        }
+  /* ---------- HERO ---------- */
+  .hero{padding:96px 16px 0;position:relative;z-index:1}
+  .hero-box{
+    position:relative;overflow:hidden;border-radius:44px;min-height:calc(100vh - 112px);
+    background:
+      radial-gradient(60% 70% at 85% 10%,rgba(124,196,255,.45),transparent 60%),
+      radial-gradient(50% 60% at 0% 100%,rgba(124,196,255,.18),transparent 60%),
+      linear-gradient(160deg,var(--navy-deep),var(--navy) 55%,var(--navy-2));
+    color:var(--white);display:flex;align-items:center;
+  }
+  .hero-box::before{
+    content:"";position:absolute;inset:0;opacity:.35;
+    background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(70% 70% at 50% 50%,#000,transparent);
+    -webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000,transparent);
+  }
+  .hero-in{
+    position:relative;z-index:2;width:min(1180px,90%);margin:0 auto;padding:80px 0;
+    display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center;
+  }
+  .pill{
+    display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 10px;border-radius:999px;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+    font-size:.78rem;font-weight:500;color:var(--sky-2);backdrop-filter:blur(8px);margin-bottom:30px;
+  }
+  .pill i{width:8px;height:8px;border-radius:50%;background:#5dffa8;box-shadow:0 0 0 4px rgba(93,255,168,.2);animation:pulse 2s infinite}
+  @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(93,255,168,0)}}
+  .hero h1{
+    font-size:clamp(3.2rem,9vw,7.6rem);font-weight:800;line-height:.92;letter-spacing:-.045em;
+  }
+  .hero h1 .serif{color:var(--sky);letter-spacing:-.02em;font-weight:400}
+  .hero p.lead{
+    max-width:520px;margin:30px 0 40px;color:rgba(255,255,255,.7);font-size:1.08rem;font-weight:300;
+  }
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;
+    font-weight:600;font-size:.92rem;transition:.35s cubic-bezier(.2,.8,.2,1);
+  }
+  .btn.p{background:var(--sky);color:var(--navy)}
+  .btn.p:hover{background:var(--white);transform:translateY(-4px);box-shadow:0 18px 40px -12px rgba(124,196,255,.7)}
+  .btn.g{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);color:var(--white);backdrop-filter:blur(8px)}
+  .btn.g:hover{background:rgba(255,255,255,.18);transform:translateY(-4px)}
+  .btn svg{transition:.3s}.btn:hover svg{transform:translateX(4px)}
 
-        /* NAVBAR */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 8%;
-            background: #0f172a;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+  .photo{position:relative;justify-self:center;width:min(360px,100%)}
+  .photo .main{
+    aspect-ratio:4/5;border-radius:36px;overflow:hidden;position:relative;
+    background:linear-gradient(160deg,var(--navy-2),var(--navy-deep));
+    border:1px solid rgba(255,255,255,.2);box-shadow:0 40px 80px -30px rgba(0,0,0,.7);
+    transform:rotate(3deg);transition:.6s cubic-bezier(.2,.8,.2,1);
+    display:grid;place-items:center;
+  }
+  .photo:hover .main{transform:rotate(0)}
+  .photo .main img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .photo .main .ini{font-size:6rem;font-weight:800;color:var(--sky);letter-spacing:-.05em}
+  .chip{
+    position:absolute;padding:12px 18px;border-radius:18px;background:rgba(255,255,255,.92);color:var(--navy);
+    font-size:.78rem;font-weight:600;box-shadow:0 20px 40px -15px rgba(0,0,0,.5);backdrop-filter:blur(10px);
+    animation:float 5s ease-in-out infinite;
+  }
+  .chip small{display:block;font-weight:400;color:var(--muted);font-size:.68rem}
+  .chip.a{left:-40px;top:16%}
+  .chip.b{right:-30px;bottom:12%;animation-delay:-2.5s;background:var(--sky)}
+  @keyframes float{50%{transform:translateY(-12px)}}
 
-        .logo {
-            color: white;
-            font-size: 23px;
-            font-weight: 700;
-        }
+  /* ---------- MARQUEE ---------- */
+  .marquee{overflow:hidden;padding:46px 0;position:relative;z-index:1}
+  .marquee-track{display:flex;gap:50px;width:max-content;animation:slide 32s linear infinite}
+  .marquee span{
+    font-size:clamp(1.6rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-.03em;white-space:nowrap;
+    color:transparent;-webkit-text-stroke:1.5px rgba(11,27,63,.35);display:flex;align-items:center;gap:50px;
+  }
+  .marquee span::after{content:"✦";-webkit-text-stroke:0;color:var(--sky);font-size:1.4rem}
+  @keyframes slide{to{transform:translateX(-50%)}}
 
-        .logo span {
-            color: #38bdf8;
-        }
+  /* ---------- SECTION ---------- */
+  section.s{padding:90px 0;position:relative;z-index:1}
+  .label{
+    display:inline-block;padding:7px 16px;border-radius:999px;background:var(--sky-soft);color:#2a6fb5;
+    font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;
+  }
+  .title{font-size:clamp(2.2rem,5vw,4rem);font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:50px;max-width:760px}
+  .title .serif{color:#2a8be0}
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
+  /* ---------- BENTO ---------- */
+  .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(170px,auto);gap:18px}
+  .bx{
+    border-radius:var(--r);padding:30px;background:var(--white);border:1px solid var(--line);
+    position:relative;overflow:hidden;transition:.45s cubic-bezier(.2,.8,.2,1);
+  }
+  .bx:hover{transform:translateY(-8px);box-shadow:0 30px 60px -25px rgba(11,27,63,.3)}
+  .bx small{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);display:block;margin-bottom:10px}
+  .bx h3{font-size:1.5rem;font-weight:700;letter-spacing:-.03em;line-height:1.15}
+  .bx .big{font-size:2rem;font-weight:800;letter-spacing:-.04em;line-height:1.1}
+  .bx.about{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column;justify-content:space-between}
+  .bx.about p{color:var(--muted);font-size:1.02rem;margin-top:16px}
+  .bx.about h3{font-size:2.3rem}
+  .bx.navy{background:linear-gradient(150deg,var(--navy),var(--navy-2));color:var(--white);border:0}
+  .bx.navy small{color:var(--sky-2)}
+  .bx.sky{background:linear-gradient(150deg,var(--sky),var(--sky-2));border:0}
+  .bx.sky small{color:rgba(11,27,63,.6)}
+  .bx.wide{grid-column:span 2}
+  .bx .ico{
+    position:absolute;right:22px;bottom:18px;font-size:3.4rem;opacity:.9;transition:.5s;
+  }
+  .bx:hover .ico{transform:scale(1.2) rotate(-8deg)}
+  .dotbg::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(rgba(124,196,255,.45),transparent 70%);
+  }
 
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.3s;
-        }
+  /* ---------- SKILLS LIST ---------- */
+  .rows{border-top:1px solid var(--line)}
+  .row{
+    display:grid;grid-template-columns:90px 1fr 1.2fr 140px;gap:24px;align-items:center;
+    padding:34px 10px;border-bottom:1px solid var(--line);transition:.4s;position:relative;
+  }
+  .row:hover{background:var(--white);padding-left:28px;padding-right:28px;border-radius:24px;border-color:transparent;box-shadow:0 20px 50px -25px rgba(11,27,63,.3)}
+  .row .n{font-family:var(--serif);font-style:italic;font-size:2.2rem;color:#2a8be0}
+  .row h3{font-size:clamp(1.3rem,2.6vw,2rem);font-weight:700;letter-spacing:-.03em}
+  .row p{color:var(--muted);font-size:.95rem}
+  .bar{height:6px;border-radius:6px;background:var(--sky-soft);overflow:hidden}
+  .bar i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--navy),var(--sky));transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
 
-        nav ul li a:hover {
-            color: #38bdf8;
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    background:linear-gradient(170deg,var(--navy-deep),var(--navy) 60%,var(--navy-2));
+    border-radius:44px;margin:0 16px;color:var(--white);padding:100px 0 90px;position:relative;overflow:hidden;z-index:1;
+  }
+  .gallery::before{
+    content:"";position:absolute;width:700px;height:700px;border-radius:50%;left:-250px;top:-250px;
+    background:radial-gradient(rgba(124,196,255,.22),transparent 65%);
+  }
+  .gallery .label{background:rgba(124,196,255,.15);color:var(--sky)}
+  .gallery .title .serif{color:var(--sky)}
+  .g-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:10px}
+  .g-head .title{margin-bottom:30px}
+  .ctrl{display:flex;gap:12px;align-items:center;margin-bottom:34px}
+  .count{font-weight:700;font-size:1.1rem;letter-spacing:-.02em;margin-right:14px;color:var(--sky-2)}
+  .count b{font-size:2rem;color:var(--white)}
+  .arr{
+    width:56px;height:56px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);
+    color:var(--white);cursor:pointer;display:grid;place-items:center;transition:.3s;backdrop-filter:blur(8px);
+  }
+  .arr:hover{background:var(--sky);color:var(--navy);border-color:var(--sky);transform:scale(1.08)}
+  .track{
+    display:flex;gap:26px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px 14%;position:relative;
+    scrollbar-width:none;
+  }
+  .track::-webkit-scrollbar{display:none}
+  .card{
+    flex:0 0 72%;scroll-snap-align:center;aspect-ratio:16/10;border-radius:32px;overflow:hidden;position:relative;
+    background:var(--navy-2);border:1px solid rgba(255,255,255,.14);
+    transform:scale(.88);opacity:.45;filter:saturate(.7);transition:.7s cubic-bezier(.2,.8,.2,1);
+  }
+  .card.act{transform:scale(1);opacity:1;filter:none;box-shadow:0 50px 100px -40px rgba(0,0,0,.8)}
+  .card img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform 1.4s}
+  .card.act:hover img{transform:scale(1.05)}
+  .card .ph{
+    position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px;
+    background:radial-gradient(circle at 25% 25%,rgba(124,196,255,.4),transparent 55%),linear-gradient(140deg,var(--navy-2),var(--navy-deep));
+  }
+  .card .ph b{font-size:3.4rem;font-weight:800;letter-spacing:-.05em;color:var(--sky)}
+  .card .ph small{font-size:.72rem;letter-spacing:.12em;color:rgba(255,255,255,.55)}
+  .card.noimg .ph{display:flex}.card.noimg img{display:none}
+  .cap{
+    position:absolute;left:18px;right:18px;bottom:18px;padding:18px 24px;border-radius:22px;
+    background:rgba(255,255,255,.14);backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.22);
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+  }
+  .cap h3{font-size:1.25rem;font-weight:700;letter-spacing:-.02em}
+  .cap p{font-size:.82rem;color:rgba(255,255,255,.75)}
+  .cap span{font-family:var(--serif);font-style:italic;font-size:1.6rem;color:var(--sky)}
+  .prog{width:min(1180px,92%);margin:34px auto 0;height:3px;border-radius:3px;background:rgba(255,255,255,.15);overflow:hidden}
+  .prog i{display:block;height:100%;width:0;background:var(--sky);border-radius:3px;transition:width .6s}
+
+  /* ---------- CONTACT ---------- */
+  .contact{text-align:center;padding:130px 0 100px}
+  .contact h2{
+    font-size:clamp(3rem,10vw,8.5rem);font-weight:800;letter-spacing:-.05em;line-height:.92;margin-bottom:34px;
+  }
+  .contact h2 .serif{color:#2a8be0}
+  .contact p{color:var(--muted);max-width:480px;margin:0 auto 44px}
+  .links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .links a{
+    padding:16px 30px;border-radius:999px;background:var(--white);border:1px solid var(--line);font-weight:600;font-size:.92rem;
+    transition:.35s cubic-bezier(.2,.8,.2,1);
+  }
+  .links a:hover{background:var(--navy);color:var(--white);transform:translateY(-5px);box-shadow:0 20px 40px -15px rgba(11,27,63,.5)}
+  .links a.first{background:var(--navy);color:var(--white)}
+  .links a.first:hover{background:var(--sky);color:var(--navy)}
+  footer{padding:30px 0 40px;text-align:center;color:var(--muted);font-size:.82rem;position:relative;z-index:1}
+  footer b{color:var(--navy)}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(46px);transition:1s cubic-bezier(.2,.8,.2,1)}
+  .rv.show{opacity:1;transform:none}
+  .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:960px){
+    .hero-in{grid-template-columns:1fr;text-align:center;padding:70px 0}
+    .hero p.lead{margin-left:auto;margin-right:auto}
+    .btn-row{justify-content:center}
+    .photo{margin-top:20px}.chip.a{left:-6px}.chip.b{right:-6px}
+    .bento{grid-template-columns:repeat(2,1fr)}
+    .bx.about{grid-column:span 2}
+    .row{grid-template-columns:60px 1fr;gap:10px 18px}
+    .row p,.row .bar{grid-column:2}
+    .card{flex-basis:84%}.track{padding:20px 8%}
+  }
+  @media(max-width:620px){
+    .nav a.l{display:none}
+    .nav a.l.keep{display:block}
+    .bento{grid-template-columns:1fr}
+    .bx.about,.bx.wide{grid-column:span 1}
+    .hero-box{border-radius:32px}
+    .gallery{border-radius:32px;margin:0 10px}
+    .cap{left:10px;right:10px;bottom:10px;padding:12px 16px}
+    .cap h3{font-size:1rem}.cap span{font-size:1.2rem}
+    .arr{width:46px;height:46px}
+    .card{border-radius:22px;aspect-ratio:4/3}
+  }
+</style>
+</head>
+<body>
+<div class="glow" id="glow"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#beranda" class="brand">AF</a>
+  <a href="#tentang" class="l">Tentang</a>
+  <a href="#keahlian" class="l">Keahlian</a>
+  <a href="#galeri" class="l">Galeri</a>
+  <a href="#kontak" class="cta">Kontak</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="beranda">
+  <div class="hero-box">
+    <div class="hero-in">
+      <div>
+        <div class="pill rv"><i></i> Mahasiswa · Manajemen Informasi</div>
+        <h1 class="rv d1">Hi, saya<br><span class="serif">Faried</span>.</h1>
+        <p class="lead rv d2">Ahmad Faried Musyafa' — mahasiswa Manajemen Informasi di STMM MMTC Yogyakarta. Belajar, berkarya, dan merapikan informasi menjadi sesuatu yang bermakna.</p>
+        <div class="btn-row rv d3">
+          <a href="#galeri" class="btn p">Lihat Galeri
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#kontak" class="btn g">Hubungi Saya</a>
+        </div>
+      </div>
+      <div class="photo rv d2">
+        <div class="main">
+          <!-- GANTI foto-profil.jpg dengan foto Anda -->
+          <img src="foto-profil.jpg" alt="Foto Faried" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <div class="ini" style="display:none">AF</div>
+        </div>
+        <div class="chip a">MI-B<small>Kelas</small></div>
+        <div class="chip b">Kediri — Yogyakarta<small>Domisili</small></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Manajemen Informasi</span><span>MMTC Yogyakarta</span><span>Kediri — Yogyakarta</span><span>Mahasiswa</span>
+    <span>Manajemen Informasi</span><span>MMTC Yogyakarta</span><span>Kediri — Yogyakarta</span><span>Mahasiswa</span>
+  </div>
+</div>
+
+<!-- TENTANG -->
+<section class="s" id="tentang">
+  <div class="wrap">
+    <span class="label rv">Tentang</span>
+    <h2 class="title rv d1">Sedikit tentang <span class="serif">saya</span></h2>
+    <div class="bento">
+      <div class="bx about navy dotbg rv">
+        <div>
+          <small>Perkenalan</small>
+          <h3>Ahmad Faried Musyafa'</h3>
+          <p style="color:rgba(255,255,255,.72)">Mahasiswa Manajemen Informasi kelas MI-B di Sekolah Tinggi Multi Media (MMTC) Yogyakarta. Saya suka belajar hal baru, bekerja rapi, dan menyajikan informasi secara sederhana namun berkesan.</p>
+        </div>
+        <div class="big" style="color:var(--sky)">Simple. Rapi. Bermakna.</div>
+      </div>
+      <div class="bx rv d1"><small>NIM</small><div class="big">025241461145</div><span class="ico">🪪</span></div>
+      <div class="bx sky rv d2"><small>Status</small><div class="big">Mahasiswa</div><span class="ico">🎓</span></div>
+      <div class="bx wide rv d2"><small>Program Studi / Kelas</small><div class="big">Manajemen Informasi <span class="serif" style="color:#2a8be0">MI-B</span></div><span class="ico">🗂️</span></div>
+      <div class="bx rv d3"><small>Universitas</small><h3>STMM MMTC Yogyakarta</h3></div>
+      <div class="bx rv d4"><small>Domisili</small><h3>Kediri — Yogyakarta</h3><span class="ico">📍</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- KEAHLIAN -->
+<section class="s" id="keahlian">
+  <div class="wrap">
+    <span class="label rv">Keahlian</span>
+    <h2 class="title rv d1">Apa yang sedang saya <span class="serif">pelajari</span></h2>
+    <!-- Ubah teks & angka persen sesuai kemampuan Anda -->
+    <div class="rows">
+      <div class="row rv"><span class="n">01</span><h3>Manajemen Informasi</h3><p>Mengelola, mengarsipkan, dan menata informasi secara sistematis.</p><div class="bar"><i data-w="80%"></i></div></div>
+      <div class="row rv"><span class="n">02</span><h3>Desain &amp; Web</h3><p>HTML, CSS, dan antarmuka yang bersih, modern, dan nyaman dilihat.</p><div class="bar"><i data-w="70%"></i></div></div>
+      <div class="row rv"><span class="n">03</span><h3>Pengolahan Data</h3><p>Mengolah dan menyajikan data agar mudah dipahami.</p><div class="bar"><i data-w="75%"></i></div></div>
+      <div class="row rv"><span class="n">04</span><h3>Komunikasi &amp; Teamwork</h3><p>Berdiskusi, bekerja sama, dan menyampaikan ide dengan jelas.</p><div class="bar"><i data-w="85%"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERI -->
+<section class="gallery" id="galeri">
+  <div class="wrap">
+    <div class="g-head">
+      <div>
+        <span class="label rv">Galeri</span>
+        <h2 class="title rv d1">Momen &amp; <span class="serif">karya</span></h2>
+      </div>
+      <div class="ctrl rv d1">
+        <div class="count"><b id="cur">01</b> / <span id="tot">04</span></div>
+        <button class="arr" id="prev" aria-label="Sebelumnya"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button class="arr" id="next" aria-label="Berikutnya"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GANTI nama file & teks. Tambah/hapus blok .card sesuai kebutuhan -->
+  <div class="track" id="track">
+    <div class="card"><img src="foto1.jpg" alt="Foto 1"><div class="ph"><b>01</b><small>LETAKKAN foto1.jpg DI FOLDER YANG SAMA</small></div>
+      <div class="cap"><div><h3>Kegiatan Kampus</h3><p>Perkuliahan di MMTC Yogyakarta</p></div><span>01</span></div></div>
+    <div class="card"><img src="foto2.jpg" alt="Foto 2"><div class="ph"><b>02</b><small>LETAKKAN foto2.jpg DI FOLDER YANG SAMA</small></div>
+      <div class="cap"><div><h3>Proyek &amp; Tugas</h3><p>Hasil karya selama kuliah</p></div><span>02</span></div></div>
+    <div class="card"><img src="foto3.jpg" alt="Foto 3"><div class="ph"><b>03</b><small>LETAKKAN foto3.jpg DI FOLDER YANG SAMA</small></div>
+      <div class="cap"><div><h3>Bersama Teman</h3><p>Kebersamaan kelas MI-B</p></div><span>03</span></div></div>
+    <div class="card"><img src="foto4.jpg" alt="Foto 4"><div class="ph"><b>04</b><small>LETAKKAN foto4.jpg DI FOLDER YANG SAMA</small></div>
+      <div class="cap"><div><h3>Perjalanan</h3><p>Kediri — Yogyakarta</p></div><span>04</span></div></div>
+  </div>
+  <div class="prog"><i id="prog"></i></div>
+</section>
+
+<!-- KONTAK -->
+<section class="contact" id="kontak">
+  <div class="wrap">
+    <h2 class="rv">Ayo <span class="serif">ngobrol</span>.</h2>
+    <p class="rv d1">Terbuka untuk diskusi, kolaborasi, atau sekadar berkenalan. Hubungi saya lewat salah satu kanal di bawah.</p>
+    <div class="links rv d2">
+      <!-- GANTI tautan dengan akun Anda -->
+      <a class="first" href="mailto:emailanda@example.com">Email</a>
+      <a href="https://instagram.com/usernameanda" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://linkedin.com/in/usernameanda" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/usernameanda" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>&copy; <span id="yr"></span> <b>Ahmad Faried Musyafa'</b> · Manajemen Informasi MI-B · STMM MMTC Yogyakarta</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // cursor glow
+  const glow = document.getElementById('glow');
+  window.addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+
+  // reveal + bars
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('show');
+    e.target.querySelectorAll('.bar i').forEach(i => i.style.width = i.dataset.w);
+    io.unobserve(e.target);
+  }), { threshold: .15 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // ---- GALLERY CAROUSEL ----
+  const track = document.getElementById('track');
+  const cards = [...track.children];
+  const cur = document.getElementById('cur');
+  const prog = document.getElementById('prog');
+  document.getElementById('tot').textContent = String(cards.length).padStart(2, '0');
+  let idx = 0, timer;
+
+  cards.forEach(c => c.querySelector('img').addEventListener('error', () => c.classList.add('noimg')));
+
+  function setActive(i) {
+    idx = i;
+    cards.forEach((c, k) => c.classList.toggle('act', k === i));
+    cur.textContent = String(i + 1).padStart(2, '0');
+    prog.style.width = ((i + 1) / cards.length * 100) + '%';
+  }
+  function go(i) {
+    i = (i + cards.length) % cards.length;
+    const c = cards[i];
+    track.scrollTo({ left: c.offsetLeft - (track.clientWidth - c.offsetWidth) / 2, behavior: 'smooth' });
+    setActive(i);
+    restart();
+  }
+  function restart() { clearInterval(timer); timer = setInterval(() => go(idx + 1), 5000); }
+
+  let st;
+  track.addEventListener('scroll', () => {
+    clearTimeout(st);
+    st = setTimeout(() => {
+      const mid = track.scrollLeft + track.clientWidth / 2;
+      let best = 0, d = Infinity;
+      cards.forEach((c, k) => {
+        const dist = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
+        if (dist < d) { d = dist; best = k; }
+      });
+      if (best !== idx) setActive(best);
+    }, 80);
+  });
+  cards.forEach((c, k) => c.addEventListener('click', () => go(k)));
+  document.getElementById('prev').onclick = () => go(idx - 1);
+  document.getElementById('next').onclick = () => go(idx + 1);
+  track.addEventListener('mouseenter', () => clearInterval(timer));
+  track.addEventListener('mouseleave', restart);
+  track.addEventListener('touchstart', () => clearInterval(timer), { passive: true });
+  track.addEventListener('touchend', restart);
+
+  window.addEventListener('load', () => { setActive(0); go(0); });
+  window.addEventListener('resize', () => go(idx));
+</script>
+</body>
+</html>
